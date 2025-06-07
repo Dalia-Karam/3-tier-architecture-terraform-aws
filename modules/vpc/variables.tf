@@ -10,11 +10,16 @@ variable "public_subnets_cidrs" {
   
 }
 
-variable "private_subnets_cidrs" {
-  description = "List of CIDR blocks for private subnets"
+variable "private_app_subnets_cidrs" {
+  description = "List of CIDR blocks for private application subnets"
   type        = list(string)
-  
 }
+
+variable "private_db_subnets_cidrs" {
+  description = "List of CIDR blocks for private database subnets"
+  type        = list(string)
+}
+
 
 variable "azs" {
   description = "List of availability zones"

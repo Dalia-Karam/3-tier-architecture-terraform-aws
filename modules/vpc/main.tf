@@ -19,14 +19,25 @@ resource "aws_subnet" "public" {
   }
 }
 
-resource "aws_subnet" "private" {
-  count                   = length(var.private_subnets_cidrs)
+resource "aws_subnet" "private_app" {
+  count                   = length(var.private_app_subnets_cidrs)
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = var.private_subnets_cidrs[count.index]
+  cidr_block              = var.private_app_subnets_cidrs[count.index]
   availability_zone       = var.azs[count.index]
   map_public_ip_on_launch = false
   tags = {
-    Name = "private-subnet-${var.azs[count.index]}",
+    Name = "private-app-subnet-${var.azs[count.index]}"
+  }
+}
+
+resource "aws_subnet" "private_db" {
+  count                   = length(var.private_db_subnets_cidrs)
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = var.private_db_subnets_cidrs[count.index]
+  availability_zone       = var.azs[count.index]
+  map_public_ip_on_launch = false
+  tags = {
+    Name = "private-db-subnet-${var.azs[count.index]}"
   }
 }
 
@@ -63,14 +74,21 @@ resource "aws_route_table" "public" {
 
 }
 
-resource "aws_route_table" "private" {
-  vpc_id = aws_vpc.myvpc.id
+resource "aws_route_table" "private_app" {
+  vpc_id = aws_vpc.vpc.id
   route {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.nat_gateway.id
   }
   tags = {
-    Name = "private-route-table"
+    Name = "private-app-route-table"
+  }
+}
+
+resource "aws_route_table" "private_db" {
+  vpc_id = aws_vpc.vpc.id
+  tags = {
+    Name = "private-db-route-table"
   }
 }
 
@@ -80,8 +98,14 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public.id
 }
 
-resource "aws_route_table_association" "private" {
-  count          = length(aws_subnet.private)
-  subnet_id      = aws_subnet.private[count.index].id
-  route_table_id = aws_route_table.private.id
+resource "aws_route_table_association" "private_app" {
+  count          = length(aws_subnet.private_app)
+  subnet_id      = aws_subnet.private_app[count.index].id
+  route_table_id = aws_route_table.private_app.id
+}
+
+resource "aws_route_table_association" "private_db" {
+  count          = length(aws_subnet.private_db)
+  subnet_id      = aws_subnet.private_db[count.index].id
+  route_table_id = aws_route_table.private_db.id
 }
