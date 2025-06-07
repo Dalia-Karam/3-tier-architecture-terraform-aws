@@ -29,6 +29,11 @@ A **3-tier architecture** is a design pattern that separates an application into
 
 ---
 
+## Architecture Diagram
+![3tier-architecture](https://github.com/user-attachments/assets/73dcd3ff-55f1-4272-be8c-8cec2100f7e2)
+
+---
+
 ## 🛠️ Architecture Components
 
 ### 🔹 Tier 1 – Web Layer (Public Subnet)
