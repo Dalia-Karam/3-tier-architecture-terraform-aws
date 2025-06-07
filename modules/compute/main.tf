@@ -1,7 +1,7 @@
 resource "aws_launch_template" "web" {
   name_prefix   = "web-launch-template-"
-  image_id      = var.web_ami_id
-  instance_type = var.web_instance_type
+  image_id      = "ami-1234567890abcdef0"
+  instance_type = "t3.medium"
   key_name      = var.key_name
 
   vpc_security_group_ids = var.web_sg_ids
@@ -13,8 +13,8 @@ resource "aws_launch_template" "web" {
 
 resource "aws_launch_template" "app" {
   name_prefix   = "app-launch-template-"
-  image_id      = var.app_ami_id
-  instance_type = var.app_instance_type
+  image_id      = "ami-0987654321fedcba0"
+  instance_type = "t3.medium"
   key_name      = var.key_name
 
   vpc_security_group_ids = var.app_sg_ids

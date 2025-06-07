@@ -33,26 +33,6 @@ variable "app_sg_ids" {
   type        = list(string)
 }
 
-variable "web_ami_id" {
-  description = "AMI ID for web tier instances"
-  type        = string
-}
-
-variable "app_ami_id" {
-  description = "AMI ID for app tier instances"
-  type        = string
-}
-
-variable "web_instance_type" {
-  description = "Instance type for web tier"
-  type        = string
-}
-
-variable "app_instance_type" {
-  description = "Instance type for app tier"
-  type        = string
-}
-
 variable "key_name" {
   description = "Key pair name for SSH access"
   type        = string
