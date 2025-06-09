@@ -9,7 +9,6 @@ resource "aws_db_subnet_group" "rds" {
 
 resource "aws_db_instance" "primary" {
   allocated_storage      = 10
-  db_name                = var.db_name
   engine                 = "mysql"
   identifier             = "mysql-primary"
   engine_version         = "8.0"
