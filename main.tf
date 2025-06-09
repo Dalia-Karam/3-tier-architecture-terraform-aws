@@ -9,7 +9,7 @@ module "vpc" {
 
 module "security_groups" {
   source = "./modules/security-groups"
-  vpc_id = module.network.vpc_id
+  vpc_id = module.vpc.vpc_id
 }
 
 module "database" {
@@ -23,13 +23,13 @@ module "database" {
 
 module "compute" {
   source = "./modules/compute"
-  vpc_id                 = module.network.vpc_id
-  public_subnet_ids      = module.network.public_subnet_ids
-  private_app_subnet_ids = module.network.private_app_subnet_ids
-  web_sg_ids             = [module.security_group.web_sg]
-  app_sg_ids             = [module.security_group.app_sg]
-  external_alb_sg_ids    = [module.security_group.external_alb_sg]
-  internal_alb_sg_ids    = [module.security_group.internal_alb_sg]
+  vpc_id                 = module.vpc.vpc_id
+  public_subnet_ids      = module.vpc.public_subnet_ids
+  private_app_subnet_ids = module.vpc.private_app_subnet_ids
+  web_sg_ids             = [module.security_groups.web_sg]
+  app_sg_ids             = [module.security_groups.app_sg]
+  external_alb_sg_ids    = [module.security_groups.external_alb_sg]
+  internal_alb_sg_ids    = [module.security_groups.internal_alb_sg]
   key_name               = var.key_name
   web_desired_capacity   = var.web_desired_capacity
   web_min_size           = var.web_min_size
